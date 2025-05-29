@@ -15,6 +15,15 @@ export async function GET(
       );
     }
 
+    // Проверяем наличие Firebase конфигурации
+    if (!process.env.NEXT_PUBLIC_FIREBASE_API_KEY || !process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID) {
+      console.warn("Firebase not configured, returning 404");
+      return NextResponse.json(
+        { error: "Vacancy not found" },
+        { status: 404 }
+      );
+    }
+
     const vacancy = await getVacancyById(id);
 
     if (!vacancy) {

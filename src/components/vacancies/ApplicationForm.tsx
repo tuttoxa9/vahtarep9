@@ -46,18 +46,19 @@ export default function ApplicationForm({ vacancyId, className }: ApplicationFor
   const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true);
 
-    try {
-      // Определяем URL в зависимости от окружения
-      const getApiUrl = () => {
-        // Для Netlify всегда используем функции
-        if (typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
-          return '/.netlify/functions/submit-application';
-        }
-        // Для локальной разработки используем API route
-        return '/api/submit-application';
-      };
+    // Определяем URL в зависимости от окружения
+    const getApiUrl = () => {
+      // Для Netlify всегда используем функции
+      if (typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
+        return '/.netlify/functions/submit-application';
+      }
+      // Для локальной разработки используем API route
+      return '/api/submit-application';
+    };
 
-      const apiUrl = getApiUrl();
+    const apiUrl = getApiUrl();
+
+    try {
 
       console.log('Submitting to:', apiUrl);
 

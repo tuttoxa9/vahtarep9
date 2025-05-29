@@ -3,6 +3,13 @@ import { getAllVacancies } from "@/lib/firestore";
 
 export async function GET() {
   try {
+    // Проверяем наличие Firebase конфигурации
+    if (!process.env.NEXT_PUBLIC_FIREBASE_API_KEY || !process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID) {
+      // Возвращаем пустой массив если Firebase не настроен
+      console.warn("Firebase not configured, returning empty vacancies array");
+      return NextResponse.json([]);
+    }
+
     const vacancies = await getAllVacancies();
 
     // Сериализуем данные для клиента
